@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SQLInjectionsAndHashPractise:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="MD5Practise.war">
+      <element id="artifact" artifact-name="SQLInjectionsAndHashPractise:war exploded" />
+    </root>
+  </artifact>
+</component>

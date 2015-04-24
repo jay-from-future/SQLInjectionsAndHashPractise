@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="MD5Practise:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="MD5Practise.war">
+      <element id="artifact" artifact-name="MD5Practise:war exploded" />
+    </root>
+  </artifact>
+</component>
