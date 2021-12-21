@@ -44,16 +44,16 @@
 
     </dependencies>
     <build>
+       <plugins>
+             <plugin>    
+                 <artifactId>maven-compiler-plugin</artifactId>
+                 <configuration>
+                     <source>1.8</source>
+                     <target>1.8</target>
+                 </configuration>
+             </plugin>
+         </plugins>
         <finalName>MD5Practise</finalName>
     </build>
-         
-   <plugins>
-    <plugin>    
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-        </configuration>
-    </plugin>
-</plugins>
+
 </project>
