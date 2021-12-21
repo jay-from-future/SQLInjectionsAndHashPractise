@@ -69,6 +69,15 @@ jobs:
     # You may pin to the exact commit or the version.
     # uses: comchangs/action-maven@54db702e085ac767dad94c87e84499afb9d77162
       uses: comchangs/action-maven@v0.4-beta
+        workflow "build test" {
+          resolves = ["comchangs/action-maven"]
+          on = "push"
+        }
+
+        action "comchangs/action-maven" {
+          uses = "comchangs/action-maven@master"
+          args = "clean compile"
+        }
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
